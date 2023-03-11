@@ -3,7 +3,8 @@ import { LitElement, css, html } from 'lit';
 export class MyInput extends LitElement {
     static get properties() {
         return {
-            value: { type: String }
+            value: { type: String },
+            URL_API: {type: String},
         };
     }
 
@@ -39,6 +40,7 @@ export class MyInput extends LitElement {
     constructor() {
         super();
         this.value = '';
+        this.URL_API= "https://api.openai.com/v1";
     }
 
     handleInput(event) {
@@ -59,7 +61,11 @@ export class MyInput extends LitElement {
     }
 
     _sendMessage(value){
-        fetch(this.URL_API, )
+        fetch(this.URL_API, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: (value),
+        })
     }
 }
 
