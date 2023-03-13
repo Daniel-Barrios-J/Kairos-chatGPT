@@ -47,14 +47,8 @@ export class HistoryChat extends LitElement {
     super();
     this.chat = {}
     this.chats = [
-      // {
-      //    id:'dlsjkfhas',
-      //    title: 'titulo 1',
-      //    sessionChat: [
-      //     ...this.chats,
-      //     {...this.chat}
-      //    ]
-      // }
+      ...this.chats,
+      {...this.chat}
     ]
     
   }
@@ -69,7 +63,7 @@ export class HistoryChat extends LitElement {
         ${this.chats?.map(chat => {
           return html`
           <h5>
-            ${chat.title}
+            ${chat?.id}
           </h5>
           `
         })}
