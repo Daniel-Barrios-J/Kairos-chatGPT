@@ -9,13 +9,11 @@ export class OutputModule extends LitElement {
   Response by ChatGPT ('Object')
   */
     static get properties() {
-      console.log('Properties');
         return {
             data:{type:Object},
         };
     }
     static get styles() {
-        console.log("Styles");
         const { cssRules } = document.styleSheets[0];
         const globalStyle = css([
           Object.values(cssRules)
@@ -49,12 +47,10 @@ export class OutputModule extends LitElement {
     
     constructor() {
         super();
-        console.log('Constructor');
         this.data = {}
       }
 
   render() {
-      console.log('Render');
     return html`
       <div class="conteiner-output">
         <div class="colum">
