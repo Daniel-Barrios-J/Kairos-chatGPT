@@ -36,7 +36,7 @@ export default class ConnectionApiGPT {
     };
 
     if (options.isAuth) {
-      headers.Authorization = this.getToken();
+      headers.Authorization = `Bearer ${this.getToken()}`;
     }
 
     return headers;
