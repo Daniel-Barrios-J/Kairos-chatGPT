@@ -3,7 +3,7 @@ import './elements/outputModule';
 function App() {
   return (
     <div>
-    <output-module></output-module>
+    <output-module data={JSON.stringify()} ></output-module>
     </div>
   );
 }
