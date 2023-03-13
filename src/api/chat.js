@@ -9,7 +9,6 @@ export class Chat extends ConnectionApiGPT {
     }
   ) {
     return new Promise((resolve, reject) => {
-      console.log(message);
       if (!message) {
         reject("Chat: insert parameter 'message' on method postMessage()");
       }

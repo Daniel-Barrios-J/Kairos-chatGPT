@@ -1,7 +1,7 @@
 const API_URL = process.env.API_URL || "https://api.openai.com/v1";
 
 const CONSTANTS = {
-  token: "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",
+  token: "API_KEY_GPT",
   roleDefault: "user",
   modelDefault: "gpt-3.5-turbo",
 };
