@@ -18,7 +18,7 @@ export class Chat extends ConnectionApiGPT {
         headers: this.createHeaders(),
         body: JSON.stringify({
           model: options.model,
-          message: [{ role: options.role, content: message }],
+          messages: [{ role: options.role, content: message }],
         }),
       })
         .then((res) => res.json())
