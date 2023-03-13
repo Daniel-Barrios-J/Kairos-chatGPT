@@ -9,11 +9,10 @@ import './elements/historyChat'
  */
 
 function App() {
-  const chat = []
+  const chat = {}
   return (
     <div className= "appHistory">
       <history-chat chat={JSON.stringify(chat)}></history-chat>
-      {/* <history-chat chat={cars}></history-chat> */}
     </div>
   );
 }
