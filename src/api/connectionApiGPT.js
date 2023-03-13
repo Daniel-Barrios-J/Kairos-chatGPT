@@ -1,7 +1,7 @@
 const API_URL = process.env.API_URL || "https://api.openai.com/v1";
 
 const CONSTANTS = {
-  token: "API_KEY_GPT",
+  token: "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",
   roleDefault: "user",
   modelDefault: "gpt-3.5-turbo",
 };
@@ -36,7 +36,7 @@ export default class ConnectionApiGPT {
     };
 
     if (options.isAuth) {
-      headers.Authorization = this.getToken();
+      headers.Authorization = `Bearer ${this.getToken()}`;
     }
 
     return headers;

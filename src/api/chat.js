@@ -9,6 +9,7 @@ export class Chat extends ConnectionApiGPT {
     }
   ) {
     return new Promise((resolve, reject) => {
+      console.log(message);
       if (!message) {
         reject("Chat: insert parameter 'message' on method postMessage()");
       }
@@ -18,7 +19,7 @@ export class Chat extends ConnectionApiGPT {
         headers: this.createHeaders(),
         body: JSON.stringify({
           model: options.model,
-          message: [{ model: options.model, content: message }],
+          message: [{ role: options.role, content: message }],
         }),
       })
         .then((res) => res.json())

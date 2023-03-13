@@ -1,10 +1,10 @@
 import { LitElement, css, html } from 'lit';
+import { chat } from "../api";
 
 export class MyInput extends LitElement {
     static get properties() {
         return {
-            value: { type: String },
-            URL_API: {type: String},
+            valueInput: { type: String },
         };
     }
 
@@ -16,8 +16,8 @@ export class MyInput extends LitElement {
                 padding: .75rem 1rem;
                 border-radius: .375rem;
                 border-width: 1px;
-                width: 80%;
-                max-height:24px;
+                width: 48rem;
+                height:24px;
             }
 
             .input--container {
@@ -33,40 +33,39 @@ export class MyInput extends LitElement {
                 background-color: transparent;
                 outline: none;
                 border-width: 0;
+                color: #d9d9e3;
             }
         `
     }
 
     constructor() {
         super();
-        this.value = '';
-        this.URL_API= "https://api.openai.com/v1";
+        this.valueInput = '';
     }
 
-    handleInput(event) {
-        // this.value = event.target.value;
-        console.log(this.value)
+    async obtainValue() {
+        console.log(this.valueInput);
+        const value = await chat.postMessage(this.valueInput);
+        this.dispatchEvent(new CustomEvent('send-response', value));
+    }
+
+    updateValue(e) {
+        this.valueInput = e.target.value;
     }
 
     render() {
         return html`
         <div class='container'>
             <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
-            <input type="text" .value=${this.value} class="input--container">
-            <button @click="${this.handleInput}" class="button--container">
-            <i class="uil uil-message"></i>
+            <input  @input=${this.updateValue} type="text" class="input--container" id="myInput" >
+            <button @click=${this.obtainValue} class="button--container">
+                <i class="uil uil-message"></i>
             </button>
         </div>
-            `
+            `;
     }
 
-    _sendMessage(value){
-        fetch(this.URL_API, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: (value),
-        })
-    }
+
 }
 
 customElements.define('input-element', MyInput)
