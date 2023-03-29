@@ -15,8 +15,7 @@ export class MyInput extends LitElement {
         background-color: rgba(64, 65, 79);
         padding: 0.75rem 1rem;
         border-radius: 0.375rem;
-        border-width: 1px;
-        width: 48rem;
+        width: 350px;
         height: 24px;
       }
 
@@ -34,6 +33,7 @@ export class MyInput extends LitElement {
         outline: none;
         border-width: 0;
         color: #d9d9e3;
+        cursor: pointer;
       }
     `;
   }
@@ -50,6 +50,7 @@ export class MyInput extends LitElement {
         detail: { message: { input: this.valueInput, gpt: value } },
       })
     );
+    this.valueInput = '';
   }
 
   updateValue(e) {

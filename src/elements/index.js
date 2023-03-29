@@ -10,20 +10,21 @@ export class IndexPage extends LitElement {
     return css`
       .grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
       }
+      
       .history {
         grid-column: 1;
         grid-row: 1;
       }
-      .output {
+      .chat {
         grid-column: 3;
         grid-row: 1;
+        display: flex;
+        flex-direction: column;
       }
       .input {
-        position: absolute;
-        bottom: 1rem;
-        right: 0.5rem;
+        align-self: flex-end;
       }
     `;
   }
@@ -67,12 +68,14 @@ export class IndexPage extends LitElement {
         <div class="history">
           <history-chat chats=${JSON.stringify([this.chats])}></history-chat>
         </div>
-        <div class="output">
-          <output-module data=${JSON.stringify(this.chats)}></output-module>
+        <div class="chat">
+          <div class="output">
+            <output-module data=${JSON.stringify(this.chats)}></output-module>
+          </div>
+          <div class="input">
+            <input-element @send-response=${this.handleChatGpt}></input-element>
+          </div>
         </div>
-      </div>
-      <div class="input">
-        <input-element @send-response=${this.handleChatGpt}></input-element>
       </div>
     </div>`;
   }

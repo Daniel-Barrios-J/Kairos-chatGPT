@@ -22,7 +22,7 @@ export class OutputModule extends LitElement {
     return [
       globalStyle,
       css`
-        .conteiner-output {
+        .container-output {
           background-color: #343541;
           padding: 20px;
           margin: 0px;
@@ -52,7 +52,7 @@ export class OutputModule extends LitElement {
 
   render() {
     return html`
-      <div class="conteiner-output">
+      <div class="container-output">
         <div class="colum">
           ${this.data.choices.map(({ message }) => {
             return html`
