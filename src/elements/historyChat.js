@@ -61,7 +61,7 @@ export class HistoryChat extends LitElement {
     return this.titles.some(title => title.input === input)
   }
 
-  async updated() {
+  async getTitle(){
     if(Object.entries(this.chats[0]).length && !this.titleExists(this.chats[0].choices[0].message.content)) {
       let newTitle = {}
       const inputTitle = await chat.postMessage(`Hazme un titulo de 3 o maximo 4 palabras de la siguiente frase o pregunta: ${this.chats[0].choices[0].message.content}`);
@@ -70,6 +70,10 @@ export class HistoryChat extends LitElement {
       this.titles.push(newTitle);
       this.requestUpdate();
     }
+  }
+
+  updated() {
+    this.getTitle();
   }
 
   render() {

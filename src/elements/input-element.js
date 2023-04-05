@@ -69,6 +69,7 @@ export class MyInput extends LitElement {
           type="text"
           class="input--container"
           id="myInput"
+          .value=${this.valueInput}
         />
         <button @click=${this.obtainValue} class="button--container">
           <i class="uil uil-message"></i>
