@@ -21,7 +21,10 @@ export class HistoryChat extends LitElement {
           width: 100%;
           background-color: #343541;
           min-height: 100vh;
-          padding:16px
+          padding:16px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
         }
         .chat {
           padding: 12px;
@@ -36,6 +39,10 @@ export class HistoryChat extends LitElement {
           color: #ffffff;
           margin: 0;
         }
+        .new-chat {
+          background-color: currentColor;
+          text-align: center;
+        }
       `,
     ];
   }
@@ -45,7 +52,7 @@ export class HistoryChat extends LitElement {
       chats: {
         type: Array,
       },
-      chat: {
+      actualChat: {
         type: Object,
       }
     };
@@ -55,17 +62,31 @@ export class HistoryChat extends LitElement {
     super();
     this.chats = [];
     this.titles = [];
+    this.actualChatId = ''
+  }
+  
+    createNewChat() {
+      this.dispatchEvent(
+        new CustomEvent('new-chat', {
+          detail: {message: 'creating a new chat...'}
+        })
+      )
+    }
+
+  titleExists(id) {
+    return this.titles.some(title => title.id === id)
   }
 
-  titleExists(input) {
-    return this.titles.some(title => title.input === input)
+  theresContentGpt() {
+    if(Object.keys(this.chats[0]?.gpt).length) return true
+    return false;
   }
 
   async getTitle(){
-    if(Object.entries(this.chats[0]).length && !this.titleExists(this.chats[0].choices[0].message.content)) {
+    if(this.chats.length && !this.titleExists(this.actualChatId) && this.theresContentGpt()) {
       let newTitle = {}
-      const inputTitle = await chat.postMessage(`Hazme un titulo de 3 o maximo 4 palabras de la siguiente frase o pregunta: ${this.chats[0].choices[0].message.content}`);
-      newTitle.input = this.chats[0].choices[0].message.content;
+      const inputTitle = await chat.postMessage(`Hazme un titulo de 3 o maximo 4 palabras de la siguiente frase o pregunta: ${this.chats[0].gpt.choices[0].message.content}`);
+      newTitle.id = this.actualChatId;
       newTitle.title = inputTitle.choices[0].message.content;
       this.titles.push(newTitle);
       this.requestUpdate();
@@ -79,13 +100,21 @@ export class HistoryChat extends LitElement {
   render() {
     return html`
       <div class="chats-container">
-        <div class="chat">
-          ${this.titles.length ? this.titles.map(title=>html`<h5>${title.title}</h5>`):html`<h5>Aun no hay chats</h5>`}
+        ${this.chats.length
+          ? this.chats.map((chat, index)=>html`
+            <div>
+              ${this.titles[index]?.title}   
+            </div>
+          `)
+          : ''
+        }
+
+        <div class="new-chat chat" @click=${this.createNewChat}>
+          <h5>Nuevo chat +</h5>
         </div>
       </div>
     `;
   }
 }
 
-// eslint-disable-next-line no-undef
 export default customElements.define(HistoryChat.is, HistoryChat);

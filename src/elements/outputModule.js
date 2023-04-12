@@ -23,15 +23,27 @@ export class OutputModule extends LitElement {
       globalStyle,
       css`
         .container-output {
-          background-color: #343541;
+          /* background-color: #343541; */
           padding: 20px;
-          margin: 0px;
+          margin: 0 auto;
+          min-width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
+        .output-user {
+          text-align: end;
+        }
+        
         section {
-          margin: 6px 5px;
           padding: 10px;
           display: flex;
-          flex-direction: row;
+          width: 100%;
+        }
+        .message-container {
+          display: flex;
+          justify-content: space-evenly;
+          align-items: center;
         }
         .message {
           background-color: rgba(255, 255, 255, 0.1);
@@ -53,33 +65,31 @@ export class OutputModule extends LitElement {
   render() {
     return html`
       <div class="container-output">
-        <div class="colum">
-          ${this.data.choices.map(({ message }) => {
-            return html`
-              <section class="row">
-                ${message.role === "assistant"
-                  ? html`<div class="photo col-md-1">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                        width="60"
-                      />
-                    </div>`
-                  : null}
-                <div class="message col-md-10">
-                  <p>${message.content}</p>
+        ${this.data?.choices?.map(({ message }) => {
+          return html`
+            <section class="row">
+              ${message.role === "assistant"
+                ? html`
+                <div class="message-container">
+                  <img width="60" heigth="60" src="https://cdn-icons-png.flaticon.com/512/149/149071.png"/>
+                  <div class="message col-md-10">
+                    <p>${message.content}</p>
+                  </div>
                 </div>
-                ${message.role === "user"
-                  ? html`<div class="photo col-md-1">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                        width="60"
-                      />
-                    </div>`
-                  : null}
-              </section>
-            `;
-          })}
-        </div>
+                `
+                : html`
+                <div class="message-container">
+                  <div class="message col-md-10">
+                    <p class="output-user">${message.content}</p>
+                  </div>
+                  <img width="60" src="https://cdn-icons-png.flaticon.com/512/149/149071.png"/>
+                </div>
+                `
+                }
+                
+            </section>
+          `;
+        })}
       </div>
     `;
   }
