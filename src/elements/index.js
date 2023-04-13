@@ -50,47 +50,64 @@ export class IndexPage extends LitElement {
     newChat.id = uuidv4();
     newChat.gpt = {};
     this.chats.unshift(newChat);
-    this.actualChat = newChat;
+    this.actualChat = this.chats[0];
     this.requestUpdate();
   }
 
   handleChatGpt(event) {
 
     const { input, gpt } = event.detail.message;
-    console.log({...gpt});
-    if (this.chats.length && this.actualChat.id !== '') {
-      const index = this.chats.findIndex(chat => chat.id === this.actualChat.id)
-      console.log(index);
-      if(!Object.keys(this.actualChat.gpt).length) this.chats[index].gpt = {...gpt};
-      console.log(this.chats);
-      this.chats[index].gpt?.choices?.push({
-        index: this.chats[index].gpt.choices.length,
+    
+    if (this.chats.length && Object.keys(this.actualChat.gpt).length) {
+      this.actualChat.gpt?.choices?.push({
+        index: this.actualChat.gpt.choices.length,
         message: { role: "user", content: input },
       });
-      this.chats[index].gpt.choices?.push({
-        index: this.chats[index].gpt.choices.length,
+      this.actualChat.gpt.choices?.push({
+        index: this.actualChat.gpt.choices.length,
         message: {
           role: "assistant",
           content: gpt?.choices[0]?.message?.content,
         },
       });
-    } else {
-      const id = uuidv4();
-      this.chats.push({id, gpt});
-      this.chats[0]?.gpt?.choices.unshift({
-        index: this.chats[0].gpt.choices.length,
+    } else if(!this.chats.length){
+      const newChat = {}
+      newChat.id = uuidv4();
+      newChat.gpt = {...gpt}
+      this.chats.unshift(newChat);
+      this.actualChat = this.chats[0];
+      this.actualChat.gpt.choices?.unshift({
+        index: this.actualChat?.gpt?.choices?.length,
         message: { role: "user", content: input },
       });
-      this.actualChat = this.chats[0];
+    } else {
+      this.actualChat.gpt = {...gpt};
+      this.actualChat.gpt.choices.unshift({
+        index: this.actualChat?.gpt?.choices?.length,
+        message: { role: "user", content: input },
+      });
     }
     this.requestUpdate();
+  }
+
+  changeChat(e) {
+    const {idChat} = e.detail;
+    if(idChat === this.actualChat.id) return
+    const indexChat = this.chats.findIndex(chat => chat.id === idChat)
+    this.actualChat = this.chats[indexChat];
+    this.requestUpdate()
   }
 
   render() {
     return html`<div>
       <main class="main-container">
         <div class="history">
-          <history-chat @new-chat=${this.handleNewChat} chats=${JSON.stringify(this.chats)} actualChatId=${this.actualChat?.id}></history-chat>
+          <history-chat 
+            @new-chat=${this.handleNewChat}
+            chats=${JSON.stringify(this.chats)}
+            actualChatId=${this.actualChat.id}
+            @change-chat=${this.changeChat}
+          ></history-chat>
         </div>
         <div class="chat">
           <div class="output">
