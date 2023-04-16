@@ -111,7 +111,6 @@ export class HistoryChat extends LitElement {
   }
 
   updated() {
-    console.log('update history');
     this.getTitle();
   }
 
