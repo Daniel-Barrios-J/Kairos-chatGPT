@@ -35,7 +35,7 @@ export class OutputModule extends LitElement {
           text-align: end;
         }
         
-        section {
+        .row {
           padding: 10px;
           display: flex;
           width: 100%;
@@ -43,6 +43,7 @@ export class OutputModule extends LitElement {
         .message-container {
           display: flex;
           justify-content: space-evenly;
+          gap: 12px;
           align-items: center;
         }
         .message {
@@ -52,7 +53,16 @@ export class OutputModule extends LitElement {
           color: white;
           font-family: sans-serif;
           font-size: 14px;
+          /* min-width: 70%; */
         }
+        .ask-me {
+          color: aliceblue;
+        }
+        @media all and (max-width: 640px) {
+        .message {
+          min-width: 70%;
+        }
+      }
       `,
     ];
   }
@@ -65,7 +75,8 @@ export class OutputModule extends LitElement {
   render() {
     return html`
       <div class="container-output">
-        ${this.data?.choices?.map(({ message }) => {
+        ${this.data.choices 
+          ? this.data?.choices?.map(({ message }) => {
           return html`
             <section class="row">
               ${message.role === "assistant"
@@ -89,7 +100,9 @@ export class OutputModule extends LitElement {
                 
             </section>
           `;
-        })}
+        })
+          : html`<div class='ask-me'>Pregunta algo, Estoy para ayudarte.</div>`
+        }
       </div>
     `;
   }

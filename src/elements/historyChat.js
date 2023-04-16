@@ -47,6 +47,11 @@ export class HistoryChat extends LitElement {
           background-color: currentColor;
           text-align: center;
         }
+        @media all and (max-width: 640px) {
+          .chats-container {
+            min-height: auto;
+          }
+        }
       `,
     ];
   }

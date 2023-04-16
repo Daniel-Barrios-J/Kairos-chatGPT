@@ -15,9 +15,10 @@ export class IndexPage extends LitElement {
       }
       .history {
         min-width: 250px;
+        background-color: white;
       }
       .chat {
-        height: 95vh;
+        height: 100vh;
         width: 80vw;
         display: flex;
         flex-direction: column;
@@ -29,6 +30,16 @@ export class IndexPage extends LitElement {
       }
       .input {
         width: 100%;
+      }
+      @media all and (max-width: 640px) {
+        .main-container {
+        display: flex;
+        flex-direction: column-reverse;
+        }
+        .chat {
+        height: 90vh;
+        width: 100vw;
+        }
       }
     `;
   }

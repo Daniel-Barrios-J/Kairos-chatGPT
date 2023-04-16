@@ -18,7 +18,7 @@ export class MyInput extends LitElement {
         width: 80%;
         height: 36px;
         margin: 0 auto;
-        margin-top: 16px;
+        /* margin-top: 16px; */
 
       }
       .form-container {
@@ -26,6 +26,7 @@ export class MyInput extends LitElement {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        margin-bottom: 36px;
       }
       .loading {
         color: #d9d9e3;
